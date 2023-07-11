@@ -1,12 +1,15 @@
 class UsersController < ApplicationController
-  layout 'center_left_layout'
   before_action :authenticate_user!
   before_action :set_user, only: %i[ show edit update destroy ]
-
   # GET /users or /users.json
   def index
     session[:requested_url] = request.original_url
-    @users = User.all
+    @q = params[:q]
+    @users = if @q.present?
+               User.search(@q)
+             else
+               User.all
+             end
   end
 
   # GET /users/1 or /users/1.json

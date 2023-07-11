@@ -1,31 +1,60 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <h1>School Management System</h1>
-  <title>Your Application</title>
+  <title>School Management System</title>
   <style>
-      html, body {
-          height: 100%;
-          margin: 0;
-          padding: 0;
+      body {
+          font-family: Arial, sans-serif;
+          background-color: #f2f2f2;
+      }
+      .navbar {
           display: flex;
-          flex-direction: column;
+          justify-content: space-between;
           align-items: center;
-          text-align: left;
+          background-color: #333;
+          color: #fff;
+          padding: 10px 20px;
+      }
+
+      .navbar-title {
+          font-size: 20px;
+      }
+
+      .logout-button {
+          background-color: #dc3545;
+          color: #fff;
+          border: none;
+          padding: 10px 20px;
+          border-radius: 5px;
+          cursor: pointer;
       }
 
       .container {
-          max-width: 800px;
-          width: 100%;
-          padding: 20px;
-          background-color: #f2f2f2;
+          margin: 0 auto;
+          background-color: #fff;
           border: 1px solid #ddd;
           border-radius: 5px;
           box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+          padding: 20px;
+          height: 100vh;
+      }
+
+      h1 {
+          text-align: center;
+      }
+
+      .text-right {
+          text-align: right;
       }
   </style>
 </head>
 <body>
+<div class="navbar">
+  <div class="navbar-title">School Management System</div>
+  <% if user_signed_in? %>
+    <%= button_to "Logout", destroy_user_session_path, method: :delete, class: "logout-button" %>
+  <% end %>
+</div>
 <div class="container">
   <%= yield %>
 </div>

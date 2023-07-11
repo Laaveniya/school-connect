@@ -2,6 +2,11 @@
 
 <h1>Users</h1>
 
+<%= form_tag users_path, method: :get, class: "search-form" do %>
+  <%= text_field_tag :q, params[:q], placeholder: "Search users..." %>
+  <%= submit_tag "Search", class: "btn btn-primary" %>
+<% end %>
+
 <div id="users">
   <% @users.each do |user| %>
     <%= render user %>
