@@ -10,7 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_11_054626) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_12_121512) do
+  create_table "adminships", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "school_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["school_id"], name: "index_adminships_on_school_id"
+    t.index ["user_id"], name: "index_adminships_on_user_id"
+  end
+
+  create_table "schools", force: :cascade do |t|
+    t.string "name"
+    t.string "address"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "creator_id"
+    t.index ["creator_id"], name: "index_schools_on_creator_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.integer "role"
     t.string "name"
@@ -25,4 +43,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_11_054626) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "adminships", "schools"
+  add_foreign_key "adminships", "users"
+  add_foreign_key "schools", "users", column: "creator_id"
 end

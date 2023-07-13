@@ -45,6 +45,7 @@ gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
 gem "bootsnap", require: false
 gem 'elasticsearch-model'
 gem 'searchkick'
+gem 'cancancan'
 # Use Sass to process CSS
 # gem "sassc-rails"
 
@@ -53,7 +54,7 @@ gem 'searchkick'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
-  gem "debug", platforms: %i[ mri mingw x64_mingw ]
+  # gem "debug", platforms: %i[ mri mingw x64_mingw ]
 end
 
 group :development do
@@ -77,4 +78,7 @@ group :test do
   gem 'faker'
   gem 'shoulda-matchers', '~> 5.0'
   gem 'rails_email_validator'
+  gem 'rails-controller-testing'
+  gem 'database_cleaner'
+  gem 'devise_invitable'
 end

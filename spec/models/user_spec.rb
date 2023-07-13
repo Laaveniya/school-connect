@@ -12,6 +12,11 @@ RSpec.describe User, type: :model do
     it { should validate_length_of(:password).is_at_least(6) }
   end
 
+  describe "association" do
+    it { should have_many(:adminships) }
+    it { should have_many(:schools_administered).through(:school) }
+  end
+
   describe "enums" do
     it { should define_enum_for(:role).with_values(admin: "Admin", school_admin: "School Admin", student: "Student") }
   end

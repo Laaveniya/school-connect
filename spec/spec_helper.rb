@@ -13,8 +13,10 @@
 # it.
 #
 # See https://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
+require 'rails/all'
 require 'factory_bot_rails'
 require 'shoulda/matchers'
+require 'devise'
 Shoulda::Matchers.configure do |config|
   config.integrate do |with|
     with.test_framework :rspec
@@ -24,7 +26,9 @@ Shoulda::Matchers.configure do |config|
 end
 RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
-  config.include(Shoulda::Matchers::ActiveModel, type: :model)
+  config.include Shoulda::Matchers::ActiveModel, type: :model
+
+
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
   # assertions if you prefer.

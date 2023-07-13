@@ -8,16 +8,12 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  enum role: { admin: "Admin", school_admin: "School Admin", student: "Student" }
+  has_many :adminships, dependent: :destroy
+  has_many :schools_administered, through: :adminships, source: :school
+
+  enum role: { admin: 0, school_admin: 1, student: 2 }
 
   validates :name, presence: true
   validates :email, presence: true, uniqueness: { case_sensitive: false }
   validates :password, presence: true, length: { minimum: 6 }
-
-  def search_data
-    {
-      name: name,
-      email: email
-    }
-  end
 end
