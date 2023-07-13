@@ -5,11 +5,14 @@ class User < ApplicationRecord
   searchkick
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :database_authenticatable, :registerable,
+  devise :invitable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
   has_many :adminships, dependent: :destroy
   has_many :schools_administered, through: :adminships, source: :school
+  has_many :school_admins, through: :adminships, source: :user
+  has_many :school_memberships, dependent: :destroy
+  has_many :students, through: :school_memberships, source: :user
 
   enum role: { admin: 0, school_admin: 1, student: 2 }
 

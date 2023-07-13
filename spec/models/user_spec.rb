@@ -14,11 +14,14 @@ RSpec.describe User, type: :model do
 
   describe "association" do
     it { should have_many(:adminships) }
-    it { should have_many(:schools_administered).through(:school) }
+    it { should have_many(:schools_administered).through(:adminships) }
+    it { should have_many(:school_memberships) }
+    it { should have_many(:students).through(:school_memberships) }
+    it { should have_many(:school_admins).through(:adminships) }
   end
 
   describe "enums" do
-    it { should define_enum_for(:role).with_values(admin: "Admin", school_admin: "School Admin", student: "Student") }
+    it { should define_enum_for(:role).with_values(admin: 0, school_admin: 1, student: 2) }
   end
 
   describe "Devise modules" do

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_12_121512) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_13_073120) do
   create_table "adminships", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "school_id", null: false
@@ -18,6 +18,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_12_121512) do
     t.datetime "updated_at", null: false
     t.index ["school_id"], name: "index_adminships_on_school_id"
     t.index ["user_id"], name: "index_adminships_on_user_id"
+  end
+
+  create_table "school_memberships", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "school_id", null: false
+    t.boolean "active"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["school_id"], name: "index_school_memberships_on_school_id"
+    t.index ["user_id"], name: "index_school_memberships_on_user_id"
   end
 
   create_table "schools", force: :cascade do |t|
@@ -39,11 +49,24 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_12_121512) do
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
+    t.string "invitation_token"
+    t.datetime "invitation_created_at"
+    t.datetime "invitation_sent_at"
+    t.datetime "invitation_accepted_at"
+    t.integer "invitation_limit"
+    t.string "invited_by_type"
+    t.integer "invited_by_id"
+    t.integer "invitations_count", default: 0
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["invitation_token"], name: "index_users_on_invitation_token", unique: true
+    t.index ["invited_by_id"], name: "index_users_on_invited_by_id"
+    t.index ["invited_by_type", "invited_by_id"], name: "index_users_on_invited_by"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   add_foreign_key "adminships", "schools"
   add_foreign_key "adminships", "users"
+  add_foreign_key "school_memberships", "schools"
+  add_foreign_key "school_memberships", "users"
   add_foreign_key "schools", "users", column: "creator_id"
 end

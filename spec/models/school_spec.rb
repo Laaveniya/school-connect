@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe User, type: :model do
+RSpec.describe School, type: :model do
   subject { create(:school) }
   describe "validations" do
     it { should validate_presence_of(:name) }
@@ -11,8 +11,10 @@ RSpec.describe User, type: :model do
 
   describe "association" do
     it { should belong_to(:creator) }
-    it { should have_many(:admins).through(:adminships)  }
+    it { should have_many(:school_admins).through(:adminships)  }
+    it { should have_many(:school_memberships) }
     it { should have_many(:adminships)}
+    it { should have_many(:students)}
   end
 end
 

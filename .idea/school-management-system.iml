@@ -54,6 +54,7 @@
     <orderEntry type="library" scope="PROVIDED" name="database_cleaner-core (v2.0.1, rbenv: 2.7.5) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="date (v3.3.3, rbenv: 2.7.5) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="devise (v4.9.2, rbenv: 2.7.5) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="devise_invitable (v2.0.8, rbenv: 2.7.5) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="diff-lcs (v1.5.0, rbenv: 2.7.5) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="elasticsearch (v7.17.7, rbenv: 2.7.5) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="elasticsearch-api (v7.17.7, rbenv: 2.7.5) [gem]" level="application" />
@@ -148,6 +149,7 @@
       <list>
         <option value="active_record:application_record" />
         <option value="active_record:devise" />
+        <option value="active_record:devise_invitable" />
         <option value="active_record:multi_db" />
         <option value="application_record" />
         <option value="benchmark" />
@@ -158,6 +160,12 @@
         <option value="devise:controllers" />
         <option value="devise:install" />
         <option value="devise:views" />
+        <option value="devise_invitable" />
+        <option value="devise_invitable:form_for" />
+        <option value="devise_invitable:install" />
+        <option value="devise_invitable:invitation_views" />
+        <option value="devise_invitable:simple_form_for" />
+        <option value="devise_invitable:views" />
         <option value="factory_bot:model" />
         <option value="generator" />
         <option value="helper" />
@@ -169,6 +177,7 @@
         <option value="migration" />
         <option value="model" />
         <option value="mongoid:devise" />
+        <option value="mongoid:devise_invitable" />
         <option value="resource" />
         <option value="responders:install" />
         <option value="responders_controller" />
@@ -203,6 +212,7 @@
       <list>
         <option value="active_record:application_record" />
         <option value="active_record:devise" />
+        <option value="active_record:devise_invitable" />
         <option value="active_record:multi_db" />
         <option value="application_record" />
         <option value="benchmark" />
@@ -213,6 +223,12 @@
         <option value="devise:controllers" />
         <option value="devise:install" />
         <option value="devise:views" />
+        <option value="devise_invitable" />
+        <option value="devise_invitable:form_for" />
+        <option value="devise_invitable:install" />
+        <option value="devise_invitable:invitation_views" />
+        <option value="devise_invitable:simple_form_for" />
+        <option value="devise_invitable:views" />
         <option value="factory_bot:model" />
         <option value="generator" />
         <option value="helper" />
@@ -224,6 +240,7 @@
         <option value="migration" />
         <option value="model" />
         <option value="mongoid:devise" />
+        <option value="mongoid:devise_invitable" />
         <option value="resource" />
         <option value="responders:install" />
         <option value="responders_controller" />

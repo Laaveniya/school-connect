@@ -43,6 +43,7 @@ gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
+gem 'devise_invitable'
 gem 'elasticsearch-model'
 gem 'searchkick'
 gem 'cancancan'
@@ -80,5 +81,4 @@ group :test do
   gem 'rails_email_validator'
   gem 'rails-controller-testing'
   gem 'database_cleaner'
-  gem 'devise_invitable'
 end
