@@ -1,6 +1,7 @@
 class CourseBatchesController < ApplicationController
   before_action :authenticate_user!
-  before_action :load_and_authorize_resource, only: %i[ show edit update destroy ]
+  before_action :set_course_batch, only: %i[ show edit update destroy ]
+  load_and_authorize_resource
 
   # GET /course_batches or /course_batches.json
   def index
@@ -64,9 +65,7 @@ class CourseBatchesController < ApplicationController
     params.require(:course_batch).permit(:name, :max_enrollment_count, :start_date, :end_date, :course_id, :creator_id)
   end
 
-  def load_and_authorize_resource
+  def set_course_batch
     @course_batch = CourseBatch.find(params[:id])
-
-    authorize! :manage, @course_batch
   end
 end

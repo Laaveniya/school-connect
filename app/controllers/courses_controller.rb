@@ -1,6 +1,7 @@
 class CoursesController < ApplicationController
   before_action :authenticate_user!
-  before_action :load_and_authorize_resource, only: %i[ show edit update destroy ]
+  before_action :set_course, only: %i[ show edit update destroy ]
+  load_and_authorize_resource
 
   # GET /courses or /courses.json
   def index
@@ -64,10 +65,7 @@ class CoursesController < ApplicationController
     params.require(:course).permit(:name, :description, :start_date, :end_date, :school_id, :creator_id)
   end
 
-  def load_and_authorize_resource
-    return if current_user.student?
+  def set_course
     @course = Course.find(params[:id])
-
-    authorize! :manage, @course
   end
 end

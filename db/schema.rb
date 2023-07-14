@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_14_024127) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_14_061503) do
   create_table "adminships", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "school_id", null: false
@@ -45,6 +45,18 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_14_024127) do
     t.integer "creator_id"
     t.index ["creator_id"], name: "index_courses_on_creator_id"
     t.index ["school_id"], name: "index_courses_on_school_id"
+  end
+
+  create_table "enrollments", force: :cascade do |t|
+    t.integer "course_batch_id", null: false
+    t.integer "student_id", null: false
+    t.integer "approver_id"
+    t.integer "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["approver_id"], name: "index_enrollments_on_approver_id"
+    t.index ["course_batch_id"], name: "index_enrollments_on_course_batch_id"
+    t.index ["student_id"], name: "index_enrollments_on_student_id"
   end
 
   create_table "school_memberships", force: :cascade do |t|
@@ -96,6 +108,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_14_024127) do
   add_foreign_key "course_batches", "users", column: "creator_id"
   add_foreign_key "courses", "schools"
   add_foreign_key "courses", "users", column: "creator_id"
+  add_foreign_key "enrollments", "course_batches"
+  add_foreign_key "enrollments", "users", column: "approver_id"
+  add_foreign_key "enrollments", "users", column: "student_id"
   add_foreign_key "school_memberships", "schools"
   add_foreign_key "school_memberships", "users"
   add_foreign_key "schools", "users", column: "creator_id"

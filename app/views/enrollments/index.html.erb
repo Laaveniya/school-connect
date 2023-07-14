@@ -1,0 +1,18 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Enrollments</h1>
+
+<div id="enrollments">
+  <% @enrollments.each do |enrollment| %>
+    <%= render enrollment %>
+    <p>
+      <%= link_to "Show this enrollment", enrollment %>
+      <% if enrollment.requested? %>
+        <%= button_to "Approve", enrollment_path(enrollment, enrollment: { status: 'approved', approver_id: current_user.id }), method: :patch, class: "btn btn-primary" %>
+        <%= button_to "Deny", enrollment_path(enrollment, enrollment: { status: 'denied', approver_id: current_user.id }), method: :patch, class: "btn btn-danger" %>
+      <% end %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New enrollment", new_enrollment_path %>

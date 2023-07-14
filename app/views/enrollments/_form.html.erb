@@ -1,0 +1,112 @@
+<%= form_with(model: enrollment) do |form| %>
+  <% if enrollment.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(enrollment.errors.count, "error") %> prohibited this enrollment from being saved:</h2>
+
+      <ul>
+        <% enrollment.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <% if @schools.present? %>
+    <div>
+      <%= form.label :school_id, style: "display: block" %>
+      <%= form.collection_select :school_id, @schools, :id, :name, prompt: 'Select school', onchange: 'updateCourses()' %>
+    </div>
+  <% end %>
+  <div>
+    <%= form.label :course_id, style: "display: block" %>
+    <%= form.collection_select :course_id, [], :id, :name, prompt: 'Select course', onchange: 'updateCourseBatches()' %>
+  </div>
+
+  <div>
+    <%= form.label :course_batch_id, style: "display: block" %>
+    <%= form.collection_select :course_batch_id, [], :id, :name, prompt: 'Select course batch', onchange: 'enrollment_course_batch_id()' %>
+  </div>
+
+  <div>
+    <%= form.label :student_id, style: "display: block" %>
+    <%= form.collection_select :student_id, [], :id, :name, prompt: 'Select student', onchange: 'enrollment_student_id()' %>
+  </div>
+  <%= form.hidden_field :status, value: :approved %>
+  <%= form.hidden_field :approver_id, value: current_user.id %>
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
+
+<script type="text/javascript">
+    var selectElement = document.getElementById('enrollment_school_id');
+    selectElement.addEventListener('change', updateCourses);
+    var selectElement = document.getElementById('enrollment_course_id');
+    selectElement.addEventListener('change', updateCourseBatches);
+
+    function updateCourses() {
+        var selectedSchool = document.getElementById('enrollment_school_id').value;
+        var courseSelect = document.getElementById('enrollment_course_id');
+        var studentSelect = document.getElementById('enrollment_student_id')
+        studentSelect.innerHTML = '';
+        courseSelect.innerHTML = '';
+        fetch(`/courses?school_id=${selectedSchool}`, {
+            headers: {
+                'Accept': 'application/json'
+            }
+        })
+            .then(response => response.json())
+            .then(courses => {
+                courses.forEach(function (course) {
+                    var option = document.createElement('option');
+                    option.value = course.id;
+                    option.text = course.name;
+                    courseSelect.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+
+        fetch(`/schools/${selectedSchool}/students`, {
+            headers: {
+                'Accept': 'application/json'
+            }
+        })
+            .then(response => response.json())
+            .then(students => {
+                students.forEach(function (student) {
+                    var option = document.createElement('option');
+                    option.value = student.id;
+                    option.text = student.name;
+                    studentSelect.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+
+    function updateCourseBatches() {
+        var selectedCourse = document.getElementById('enrollment_course_id').value;
+        var courseBatchSelect = document.getElementById('enrollment_course_batch_id');
+        courseBatchSelect.innerHTML = '';
+
+        fetch(`/course_batches?course_id=${selectedCourse}`, {
+            headers: {
+                'Accept': 'application/json'
+            }
+        })
+            .then(response => response.json())
+            .then(course_batches => {
+                course_batches.forEach(function (course) {
+                    var option = document.createElement('option');
+                    option.value = course.id;
+                    option.text = course.name;
+                    courseBatchSelect.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+</script>

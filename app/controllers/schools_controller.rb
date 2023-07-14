@@ -2,7 +2,15 @@
 
 class SchoolsController < ApplicationController
   before_action :authenticate_user!
-  before_action :load_and_authorize_resource, only: %i[show edit update destroy]
+  before_action :set_school, only: %i[show edit update destroy students]
+  load_and_authorize_resource
+
+  def students
+    school = School.find(params[:id])
+    students = school.students
+
+    render json: students
+  end
 
   # GET /schools or /schools.json
   def index
@@ -70,9 +78,7 @@ class SchoolsController < ApplicationController
     params.require(:school).permit(:name, :address, :creator)
   end
 
-  def load_and_authorize_resource
+  def set_school
     @school = School.find(params[:id])
-
-    authorize! :manage, @school
   end
 end
