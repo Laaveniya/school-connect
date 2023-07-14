@@ -5,11 +5,15 @@ class UsersController < ApplicationController
   def index
     session[:requested_url] = request.original_url
     @q = params[:q]
-    @users = if @q.present?
-               User.search(@q)
-             else
-               User.all
-             end
+    if current_user.school_admin?
+      @users = if @q.present?
+                 User.search(@q, where: { id: current_user.administered_students.pluck(:id) })
+               else
+                 current_user.administered_students
+               end
+    else
+      @users = search_results(@q)
+    end
   end
 
   # GET /users/1 or /users/1.json
@@ -65,19 +69,23 @@ class UsersController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_user
-      @user = User.find(params[:id])
-    end
+  def set_user
+    @user = User.find(params[:id])
+  end
 
-    # Only allow a list of trusted parameters through.
-    def user_params
-      accessible = [
-        :name,
-        :email,
-        :role,
-        :password,
-        :password_confirmation
-      ]
-      params.require(:user).permit(accessible)
-    end
+  # Only allow a list of trusted parameters through.
+  def user_params
+    accessible = [
+      :name,
+      :email,
+      :role,
+      :password,
+      :password_confirmation
+    ]
+    params.require(:user).permit(accessible)
+  end
+
+  def search_results(query)
+    query.present? ? User.search(query) : User.all
+  end
 end

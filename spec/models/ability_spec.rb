@@ -13,6 +13,7 @@ RSpec.describe Ability do
 
       it { is_expected.to be_able_to(:manage, School) }
       it { is_expected.to be_able_to(:manage, Adminship) }
+      it { is_expected.to be_able_to(:create, School) }
     end
 
     context 'when user is a school admin' do
@@ -29,6 +30,7 @@ RSpec.describe Ability do
 
       context 'school is not administered by user' do
         it { is_expected.not_to be_able_to(:manage, other_school) }
+        it { is_expected.not_to be_able_to(:create, other_school) }
       end
     end
 

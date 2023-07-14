@@ -72,6 +72,7 @@ class SchoolsController < ApplicationController
 
   def load_and_authorize_resource
     @school = School.find(params[:id])
+
     authorize! :manage, @school
   end
 end

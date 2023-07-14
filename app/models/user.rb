@@ -12,7 +12,9 @@ class User < ApplicationRecord
   has_many :schools_administered, through: :adminships, source: :school
   has_many :school_admins, through: :adminships, source: :user
   has_many :school_memberships, dependent: :destroy
+  has_many :enrolled_schools, through: :school_memberships, source: :school
   has_many :students, through: :school_memberships, source: :user
+  has_many :administered_students, through: :schools_administered, source: :students
 
   enum role: { admin: 0, school_admin: 1, student: 2 }
 
