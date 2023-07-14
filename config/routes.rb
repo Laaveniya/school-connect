@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :course_batches
   resources :courses
   root to: "welcome#index"
   get 'welcome/index'

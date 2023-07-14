@@ -39,7 +39,7 @@
   <% else %>
     <%= form.hidden_field :school_id, value: current_user.schools_administered.last.id %>
   <% end %>
-
+  <%= form.hidden_field :creator_id, value: current_user.id %>
   <div>
     <%= form.submit %>
   </div>

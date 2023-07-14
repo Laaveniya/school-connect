@@ -1,6 +1,7 @@
 class Course < ApplicationRecord
   belongs_to :school
   has_many :school_admins, through: :school
+  has_many :course_batches
 
   validates :name, presence: true, uniqueness: true
   validates :description, presence: true
