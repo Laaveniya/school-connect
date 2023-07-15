@@ -81,8 +81,4 @@ class EnrollmentsController < ApplicationController
   def enrollment_params
     params.require(:enrollment).permit(:course_batch_id, :student_id, :status, :approver_id)
   end
-
-  def back_url
-    request.referer
-  end
 end

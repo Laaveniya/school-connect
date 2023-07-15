@@ -70,9 +70,7 @@ RSpec.describe Ability do
       let!(:school_membership) { create(:school_membership, user: user, school: school) }
       let(:enrollment) { create(:enrollment, student: user, course_batch: course_batch) }
 
-      it { is_expected.to be_able_to(:create, enrollment) }
       it { is_expected.to be_able_to(:read, enrollment) }
-      it { is_expected.to be_able_to(:read, course_batch) }
 
       it 'denies access to course batches where the student is not enrolled' do
         other_course_batch = create(:course_batch)

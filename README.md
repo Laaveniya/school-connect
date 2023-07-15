@@ -61,7 +61,7 @@ rails server
 ## Running the Test Suite
 
 ```
-rails rspec
+bundle exec rspec
 ```
 
 ## User Types and Responsibilities
