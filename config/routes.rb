@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
+  root to: "welcome#index"
+  devise_for :users, controllers: { registrations: 'registrations', invitations: 'admin/invitations' }
   authenticated :user, ->(user) { user.admin? || user.school_admin? } do
-    root to: "welcome#index"
     get 'welcome/index'
-    devise_for :users, controllers: { registrations: 'registrations', invitations: 'admin/invitations' }
-    resources :users
+    resources :users, except: [:new, :create]
     resources :schools do
       get 'students', on: :member
     end

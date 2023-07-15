@@ -16,10 +16,9 @@ class StudentsController < ApplicationController
     enrollment = Enrollment.new(student_id: current_user.id, course_batch_id: course_batch_id, status: :requested, approver_id: nil)
 
     if enrollment.save
-
       redirect_to dashboard_path, notice: "Successfully enrolled in course."
     else
-      render :new, status: :unprocessable_entity
+      redirect_to dashboard_path, alert: "Enrollment unsuccessful in course."
     end
   end
 end
