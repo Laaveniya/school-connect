@@ -20,6 +20,7 @@ RSpec.describe User, type: :model do
     it { should have_many(:school_admins).through(:adminships) }
     it { should have_many(:administered_students).through(:schools_administered) }
     it { should have_many(:courses_administered).through(:schools_administered) }
+    it { should have_many(:enrollments) }
   end
 
   describe "enums" do

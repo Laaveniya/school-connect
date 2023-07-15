@@ -2,12 +2,37 @@
 
 <%= form_for(resource, as: resource_name, url: invitation_path(resource_name), html: { method: :post }) do |f| %>
   <%= render "devise/shared/error_messages", resource: resource %>
-
+  <div class="flash-notice">
+    <%= notice %>
+  </div>
   <% resource.class.invite_key_fields.each do |field| -%>
-    <div class="field">
-      <%= f.label field %><br />
-      <%= f.text_field field %>
+    <div>
+      <%= f.label :name, style: "display: block" %>
+      <%= f.text_field :name %>
     </div>
+    <div>
+      <%= f.label :email, style: "display: block" %>
+      <%= f.email_field :email %>
+    </div>
+    <% if current_user.school_admin? %>
+      <%= f.hidden_field :role, value: "student" %>
+    <% else %>
+      <div>
+        <%= f.label :role, style: "display: block" %>
+        <%= f.select :role, options_for_select([['Select role', '']] + User.roles.keys.map { |key| [key.humanize, key] }, selected: nil), id: 'user_role' %>
+      </div>
+    <% end %>
+    <% if current_user.school_admin? %>
+      <div id="school-select">
+        <%= f.label :school, style: "display: block" %>
+        <%= f.select :school_id, options_for_select(@schools.pluck(:name, :id), selected: nil) %>
+      </div>
+    <% else %>
+      <div id="school-select">
+        <%= f.label :school, style: "display: block" %>
+        <%= f.select :school_id, options_for_select([['Select school', '']] + @schools.pluck(:name, :id).map { |name, id| [name, id] }, selected: nil) %>
+      </div>
+    <% end %>
   <% end -%>
 
   <div class="actions">

@@ -11,10 +11,11 @@ RSpec.describe School, type: :model do
 
   describe "association" do
     it { should belong_to(:creator) }
-    it { should have_many(:school_admins).through(:adminships)  }
+    it { should have_many(:school_admins).through(:adminships) }
     it { should have_many(:school_memberships) }
-    it { should have_many(:adminships)}
-    it { should have_many(:students)}
+    it { should have_many(:adminships) }
+    it { should have_many(:students) }
+    it { should have_many(:course_batches) }
   end
 end
 

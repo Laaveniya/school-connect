@@ -32,11 +32,14 @@ class EnrollmentsController < ApplicationController
   # POST /enrollments or /enrollments.json
   def create
     @enrollment = Enrollment.new(enrollment_params)
-
     respond_to do |format|
       if @enrollment.save
-        format.html { redirect_to enrollment_url(@enrollment), notice: "Enrollment was successfully created." }
-        format.json { render :show, status: :created, location: @enrollment }
+        if current_user.student?
+          redirect_to back_url, notice: "Enrollment was successfully created."
+        else
+          format.html { redirect_to enrollment_url(@enrollment), notice: "Enrollment was successfully created." }
+          format.json { render :show, status: :created, location: @enrollment }
+        end
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @enrollment.errors, status: :unprocessable_entity }
@@ -77,5 +80,9 @@ class EnrollmentsController < ApplicationController
   # Only allow a list of trusted parameters through.
   def enrollment_params
     params.require(:enrollment).permit(:course_batch_id, :student_id, :status, :approver_id)
+  end
+
+  def back_url
+    request.referer
   end
 end

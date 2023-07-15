@@ -8,4 +8,5 @@ class CourseBatch < ApplicationRecord
   validates :start_date, presence: true
   validates :end_date, presence: true
   validates :course_id, presence: true
+  validates :creator_id, presence: true
 end

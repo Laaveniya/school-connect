@@ -1,0 +1,37 @@
+<h1>Welcome to the Student Dashboard</h1>
+<h4><%= current_user.name %></h4>
+<h2>Classmates:</h2>
+<ul>
+  <% @classmates.each do |classmate| %>
+    <li>
+      <%= classmate.name %>
+      <% if enrollment = classmate.enrollments.find_by(course_batch_id: @course_batches.pluck(:id)) %>
+        <%= enrollment.status %>
+      <% end %>
+    </li>
+  <% end %>
+</ul>
+
+<h2>Your Enrollments:</h2>
+<ul>
+  <% @enrollments.each do |enrollment| %>
+    <li>
+      <%= enrollment.course_batch.name %>
+      <%= enrollment.status %>
+    </li>
+  <% end %>
+</ul>
+
+<h2>Available Course Batches:</h2>
+<ul>
+  <% @course_batches.each do |course_batch| %>
+    <li>
+      <%= course_batch.name %>
+      <% if enrollment = current_user.enrollments.find_by(course_batch_id: course_batch.id) %>
+        <%= enrollment.status %>
+      <% else %>
+        <%= button_to 'Enroll', enroll_course_batch_path(course_batch_id: course_batch.id), method: :post, params: { enrollment: { course_batch_id: course_batch.id, student_id: current_user.id } }, data: { confirm: 'Are you sure you want to enroll in this course batch?' }, class: 'enroll-button' %>
+      <% end %>
+    </li>
+  <% end %>
+</ul>

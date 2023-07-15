@@ -16,6 +16,7 @@ RSpec.describe Ability do
       it { is_expected.to be_able_to(:manage, Course) }
       it { is_expected.to be_able_to(:manage, CourseBatch) }
       it { is_expected.to be_able_to(:manage, Enrollment) }
+      it { is_expected.to be_able_to(:manage, User) }
     end
 
     context 'when user is a school admin' do
@@ -37,6 +38,7 @@ RSpec.describe Ability do
         it { is_expected.to be_able_to(:manage, Enrollment) }
         it { is_expected.to be_able_to(:approve, Enrollment.new(course_batch: course_batch_1)) }
         it { is_expected.to be_able_to(:deny, Enrollment.new(course_batch: course_batch_1)) }
+        it { is_expected.to be_able_to(:manage, User, adminships: { school_id: school.id }) }
       end
 
       context 'school is not administered by user' do
@@ -58,5 +60,25 @@ RSpec.describe Ability do
       it { is_expected.not_to be_able_to(:manage, Course) }
       it { is_expected.not_to be_able_to(:manage, CourseBatch) }
     end
+
+    context 'when reading as a student' do
+      let(:user) { create(:user, role: :student) }
+
+      let(:school) { create(:school) }
+      let(:course) { create(:course, school: school) }
+      let(:course_batch) { create(:course_batch, course: course) }
+      let!(:school_membership) { create(:school_membership, user: user, school: school) }
+      let(:enrollment) { create(:enrollment, student: user, course_batch: course_batch) }
+
+      it { is_expected.to be_able_to(:create, enrollment) }
+      it { is_expected.to be_able_to(:read, enrollment) }
+      it { is_expected.to be_able_to(:read, course_batch) }
+
+      it 'denies access to course batches where the student is not enrolled' do
+        other_course_batch = create(:course_batch)
+        expect(ability).not_to be_able_to(:read, other_course_batch)
+      end
+    end
+
   end
 end

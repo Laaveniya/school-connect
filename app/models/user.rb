@@ -16,10 +16,26 @@ class User < ApplicationRecord
   has_many :students, through: :school_memberships, source: :user
   has_many :administered_students, through: :schools_administered, source: :students
   has_many :courses_administered, through: :schools_administered, source: :courses
+  has_many :enrollments, foreign_key: :student_id
 
   enum role: { admin: 0, school_admin: 1, student: 2 }
 
   validates :name, presence: true
   validates :email, presence: true, uniqueness: { case_sensitive: false }
   validates :password, presence: true, length: { minimum: 6 }
+  attr_accessor :school_id
+
+  def school
+    return unless student?
+
+    school_memberships.find_by(active: true)&.school
+  end
+
+  def classmates
+    return [] unless student?
+
+    enrollment_course_batches = enrollments.includes(:course_batch).map(&:course_batch)
+    classmates_enrollments = Enrollment.includes(:student).where(course_batch: enrollment_course_batches).where.not(student: self)
+    classmates_enrollments.map(&:student)
+  end
 end
