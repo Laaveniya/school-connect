@@ -1,12 +1,12 @@
 <div id="<%= dom_id enrollment %>">
   <p>
     <strong>Course batch:</strong>
-    <%= enrollment.course_batch_id %>
+    <%= enrollment.course_batch.name %>
   </p>
 
   <p>
     <strong>Student:</strong>
-    <%= enrollment.student_id %>
+    <%= enrollment.student.name %>
   </p>
 
   <p>
@@ -16,7 +16,7 @@
 
   <p>
     <strong>Approver:</strong>
-    <%= enrollment.approver_id %>
+    <%= enrollment.approver&.name %>
   </p>
 
 </div>

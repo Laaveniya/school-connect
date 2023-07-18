@@ -30,6 +30,11 @@
           cursor: pointer;
       }
 
+      .navbar-user {
+          margin-left: auto;
+          padding-right: 10px;
+      }
+
       .container {
           margin: 0 auto;
           background-color: #fff;
@@ -43,16 +48,15 @@
       h1 {
           text-align: center;
       }
-
-      .text-right {
-          text-align: right;
-      }
   </style>
 </head>
 <body>
 <div class="navbar">
   <div class="navbar-title">School Management System</div>
   <% if user_signed_in? %>
+    <div class="navbar-user">
+      <%= "Hello #{current_user.name}" %>
+    </div>
     <%= button_to "Logout", destroy_user_session_path, method: :delete, class: "logout-button" %>
   <% end %>
 </div>
