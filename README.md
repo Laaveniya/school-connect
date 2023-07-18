@@ -29,14 +29,7 @@ git clone <repository-url>
 bundle install
 ```
 
-3. Set up the database:
-
-```
-rails db:create
-rails db:migrate
-```
-
-4. Start the Elasticsearch service (make sure it is installed and running):
+3. Start the Elasticsearch service (make sure it is installed and running):
 
 ```
 elasticsearch
@@ -50,19 +43,19 @@ docker-compose -f docker-compose.yml up
 
 ```
 
+4. Set up the database:
+
+```
+rails db:setup
+```
+
 5. Start the Rails server:
 
 ```
 rails server
 ```
 
-6. Set up the database with seed database
-
-```
-rails db:create db:migrate db:seed
-```
-
-7. Access the application in your web browser at `http://localhost:3000`.
+6. Access the application in your web browser at `http://localhost:3000`.
 
 ## Running the Test Suite
 
