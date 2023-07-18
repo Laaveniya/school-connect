@@ -131,3 +131,44 @@ The application provides the following routes:
 - `POST /enroll_course_batch` - Enroll in a course batch
 
 Please note that only authenticated users with the respective user types can access these routes.
+
+## Default Login Credentials
+
+### Admin User
+
+- Email: admin@example.com
+- Password: password
+
+### School Admin Users
+
+- School Admin 1:
+    - Email: school_admin_1@example.com
+    - Password: password
+
+- School Admin 2:
+    - Email: school_admin_2@example.com
+    - Password: password
+
+### Student Users
+
+- Student 1:
+    - Email: student1@example.com
+    - Password: password
+
+- Student 2:
+    - Email: student2@example.com
+    - Password: password
+
+- Student 3:
+    - Email: student3@example.com
+    - Password: password
+
+- Student 4:
+    - Email: student4@example.com
+    - Password: password
+
+## Login
+
+To access the application, you can visit the following URL in your web browser:
+
+- http://localhost:3000/users/sign_in
